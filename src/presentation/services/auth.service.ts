@@ -10,7 +10,6 @@ import { EmailService } from './email.service';
 
 export class AuthService {
     constructor(private readonly emailService: EmailService) {
-
     }
 
     async register(registerUserDto: RegisterUserDto) {
@@ -24,7 +23,7 @@ export class AuthService {
 
             await user.save();
 
-            const token = await JwtAdapter.generateToken({ id: user.id });
+            const token = await JwtAdapter.generateToken({ id: user.id, email: user.email });
 
             if (!token) throw CustomError.internalServer('Error while creating jwt');
 
@@ -58,6 +57,25 @@ export class AuthService {
         catch (error) {
             throw CustomError.internalServer(`${error}`);
         }
+    }
+
+    async validateEmail(token: string) {
+        const payload = await JwtAdapter.validateToken(token);
+
+        if (!payload) throw CustomError.unauthorized('Invalid payload');
+
+        const { email } = payload as { email: string };
+
+        if (!email) throw CustomError.badRequest('Invalid payload email');
+
+        const userModel = await UserModel.findOne({ email });
+
+        if (!userModel) throw CustomError.badRequest('Invalid email');
+
+        userModel.emailValidated = true;
+        userModel.save();
+
+        return true;
     }
 
     private async sendEmailValidationLink(email: string, token: string) {
