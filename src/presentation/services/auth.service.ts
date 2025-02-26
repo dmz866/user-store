@@ -73,9 +73,9 @@ export class AuthService {
         if (!userModel) throw CustomError.badRequest('Invalid email');
 
         userModel.emailValidated = true;
-        userModel.save();
+        await userModel.save();
 
-        return true;
+        return 'Email Validated!';
     }
 
     private async sendEmailValidationLink(email: string, token: string) {
