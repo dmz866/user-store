@@ -1,10 +1,10 @@
 import { CustomError } from "../errors/custom.error";
 
 export class UserEntity {
-    constructor(id: string, name: string, email: string, emailValidated: boolean, password: string, role: string[], img?: string) {
+    constructor(public id: string, public name: string, public email: string, public emailValidated: boolean, public password: string, public role: string[], public img?: string) {
     }
 
-    fromObject({ id, _id, name, email, emailValidated, password, role, img }: { [key: string]: any }) {
+    static fromObject({ id, _id, name, email, emailValidated, password, role, img }: { [key: string]: any }) {
         if (!id && !_id) {
             throw CustomError.badRequest('Missing id');
         }

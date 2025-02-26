@@ -10,4 +10,10 @@ async function main() {
     server.start();
 }
 
+/*
+(async () => {
+    main();
+})();
+ */
+
 main();
