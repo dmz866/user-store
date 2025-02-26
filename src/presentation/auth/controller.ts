@@ -3,16 +3,27 @@ import { RegisterUserDto } from '../../domain/dtos/auth/register-user.dto';
 import { AuthService } from '../services/auth.service';
 
 export class AuthController {
-    constructor(readonly authService:AuthService){}
+    constructor(readonly authService: AuthService) {
+    }
 
-    async register(req: Request, res: Response) {
+    /**
+     public async register(req: Request, res: Response) {
         const [error, registerUserDto] = RegisterUserDto.create(req.body);
 
         if (error) return res.status(400).json({ error });
+        const result = await this.authService.register(registerUserDto!);
 
-        await this.authService.register(registerUserDto!);
+        res.json(result);
+    }
+     */
 
-        res.json();
+    register = async (req: Request, res: Response) => {
+        const [error, registerUserDto] = RegisterUserDto.create(req.body);
+
+        if (error) return res.status(400).json({ error });
+        const result = await this.authService.register(registerUserDto!);
+
+        res.json(result);
     }
 
     login(req: Request, res: Response) {
