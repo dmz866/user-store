@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { USER_MODEL } from '../../constants';
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -28,4 +29,4 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-export const UserModel = mongoose.model('User', userSchema);
+export const UserModel = mongoose.model(USER_MODEL, userSchema);

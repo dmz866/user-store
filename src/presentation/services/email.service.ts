@@ -23,7 +23,7 @@ export class EmailService {
         const { to, subject, html, attachments = [] } = options;
 
         try {
-            const sentInformation = await this.transporter.sendMail({ to, subject, html, attachments, });
+            //const sentInformation = await this.transporter.sendMail({ to, subject, html, attachments, });
 
             // console.log( sentInformation );
 
