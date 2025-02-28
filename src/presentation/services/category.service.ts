@@ -18,4 +18,10 @@ export class CategoryService {
             throw CustomError.internalServer(`${error}`);
         }
     }
+
+    async getCategories() {
+        const categories = await CategoryModel.find();
+
+        return categories.map(CategoryEntity.fromObject);
+    }
 }
