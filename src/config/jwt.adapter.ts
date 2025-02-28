@@ -13,10 +13,10 @@ export class JwtAdapter {
 
     }
 
-    static validateToken(token: string) {
+    static validateToken<T>(token: string): Promise<T | string | undefined | jwt.JwtPayload> {
         return new Promise((resolve) => {
             jwt.verify(token, envs.JWT_SEED, (error, decoded) => {
-                if (error) return resolve(null);
+                if (error) return resolve(undefined);
 
                 return resolve(decoded);
             });

@@ -21,7 +21,7 @@ export class CategoryController {
         if (error) return res.status(400).json({ error });
 
         await this.categoryService.createCategory(createCategoryDto!)
-            .then((category) => res.json(category))
+            .then((category) => res.status(201).json(category))
             .catch((error) => this.handleError(error, res));
     }
 }
